@@ -1,358 +1,187 @@
-import React from "react";
-import {
-  Navbar,
-  Collapse,
-  Typography,
-  Button,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Avatar,
-  Card,
-  IconButton,
-} from "@material-tailwind/react";
-import {
-  CubeTransparentIcon,
-  UserCircleIcon,
-  CodeBracketSquareIcon,
-  Square3Stack3DIcon,
-  ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
-  PowerIcon,
-  Bars2Icon,
-} from "@heroicons/react/24/outline";
- 
-// profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-  },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-  },
-];
- 
-function ProfileMenu() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const closeMenu = () => setIsMenuOpen(false);
- 
-  return (
-    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
-      <MenuHandler>
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
-        >
-          <Avatar
-            variant="circular"
-            size="sm"
-            alt="Tania Andrew"
-            className="border border-gray-300 p-0.5"
-            src="https://images.unsplash.com/photo-1589156191108-c762ff4b96ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=986&q=80"
-          />
-          <ChevronDownIcon
-            strokeWidth={2.5}
-            className={`h-3 w-3 transition-transform ${
-              isMenuOpen ? "rotate-180" : ""
-            }`}
-          />
-        </Button>
-      </MenuHandler>
-      <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
-              onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
-            >
-              {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
-      </MenuList>
-    </Menu>
-  );
-}
- 
-// account pages menu
-const accountItems = [
-  {
-    title: "Login",
-    href: "/astro-launch-ui/login"
-  },
-  {
-    title: "Sign Up",
-    href: "/astro-launch-ui/signup"
-  }
-];
+import React, { useState, useEffect } from "react";
+import { Button, Typography } from "../lib/ui-components";
+import { Bars2Icon } from "@heroicons/react/24/outline";
+import { motion } from "framer-motion";
 
-function AccountListMenu() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
- 
-  const triggers = {
-    onMouseEnter: () => setIsMenuOpen(true),
-    onMouseLeave: () => setIsMenuOpen(false),
-  };
- 
-  const renderItems = accountItems.map(({ title, href }) => (
-    <a href={href} key={title}>
-      <MenuItem>
-        <Typography variant="paragraph" color="blue-gray" className="mb-1 font-normal">
-          {title}
-        </Typography>
-      </MenuItem>
-    </a>
-  ));
- 
-  return (
-    <React.Fragment>
-      <Menu open={isMenuOpen} handler={setIsMenuOpen}>
-        <MenuHandler>
-          <Typography as="a" href="#" variant="small" className="font-normal outline-none focus:outline-none">
-            <MenuItem
-              {...triggers}
-              className="hidden items-center gap-2 text-blue-gray-900 lg:flex lg:rounded-full"
-            >
-              <Square3Stack3DIcon className="h-[18px] w-[18px]" /> Account{" "}
-              <ChevronDownIcon
-                strokeWidth={2}
-                className={`h-3 w-3 transition-transform ${
-                  isMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-            </MenuItem>
-          </Typography>
-        </MenuHandler>
-        <MenuList
-          {...triggers}
-          className="hidden grid-cols-7 gap-3 overflow-visible lg:grid"
-        >
-          <ul className="col-span-12 flex w-full flex-col gap-1 outline-none focus:outline-none">
-            {renderItems}
-          </ul>
-        </MenuList>
-      </Menu>
-      <MenuItem className="flex items-center gap-2 text-blue-gray-900 lg:hidden">
-        <Square3Stack3DIcon className="h-[18px] w-[18px]" /> Account{" "}
-      </MenuItem>
-      <ul className="ml-6 flex w-full flex-col gap-1 lg:hidden">
-        {renderItems}
-      </ul>
-    </React.Fragment>
-  );
+// Types explicites pour tous les composants
+interface NavbarProps {
+  className?: string;
+  children: React.ReactNode;
 }
 
-// nav list menu
-const navListMenuItems = [
-  {
-    title: "About Us",
-    href: "/astro-launch-ui/about"
-  },
-  {
-    title: "Landing Page",
-    href: "/astro-launch-ui/landing"
-  },
-  {
-    title: "404",
-    href: "/astro-launch-ui/404"
-  },
-];
- 
-function NavListMenu() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
- 
-  const triggers = {
-    onMouseEnter: () => setIsMenuOpen(true),
-    onMouseLeave: () => setIsMenuOpen(false),
-  };
- 
-  const renderItems = navListMenuItems.map(({ title, href }) => (
-    <a href={href} key={title}>
-      <MenuItem>
-        <Typography variant="paragraph" color="blue-gray" className="mb-1 font-normal">
-          {title}
-        </Typography>
-      </MenuItem>
-    </a>
-  ));
- 
-  return (
-    <React.Fragment>
-      <Menu open={isMenuOpen} handler={setIsMenuOpen}>
-        <MenuHandler>
-          <Typography as="a" href="#" variant="small" className="font-normal outline-none focus:outline-none">
-            <MenuItem
-              {...triggers}
-              className="hidden items-center gap-2 text-blue-gray-900 lg:flex lg:rounded-full"
-            >
-              <Square3Stack3DIcon className="h-[18px] w-[18px]" /> Pages{" "}
-              <ChevronDownIcon
-                strokeWidth={2}
-                className={`h-3 w-3 transition-transform ${
-                  isMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-            </MenuItem>
-          </Typography>
-        </MenuHandler>
-        <MenuList
-          {...triggers}
-          className="hidden grid-cols-7 gap-3 overflow-visible lg:grid"
-        >
-          <ul className="col-span-12 flex w-full flex-col gap-1 outline-none focus:outline-none">
-            {renderItems}
-          </ul>
-        </MenuList>
-      </Menu>
-      <MenuItem className="flex items-center gap-2 text-blue-gray-900 lg:hidden">
-        <Square3Stack3DIcon className="h-[18px] w-[18px]" /> Pages{" "}
-      </MenuItem>
-      <ul className="ml-6 flex w-full flex-col gap-1 lg:hidden">
-        {renderItems}
-      </ul>
-    </React.Fragment>
-  );
+const Navbar: React.FC<NavbarProps> = ({ className = "", children }) => (
+  <nav
+    className={`fixed top-0 left-0 right-0 z-50 bg-anthracite-950/90 backdrop-blur py-6 px-4 ${className}`}
+  >
+    {children}
+  </nav>
+);
+
+interface CollapseProps {
+  open: boolean;
+  className?: string;
+  children: React.ReactNode;
 }
- 
-// nav list component
-const navListItems = [
-  {
-    label: "Docs",
-    icon: CodeBracketSquareIcon,
-  },
+
+const Collapse: React.FC<CollapseProps> = ({
+  open,
+  className = "",
+  children,
+}) => (
+  <div
+    className={`${
+      open ? "max-h-screen" : "max-h-0"
+    } overflow-hidden transition-all duration-500 ease-in-out ${className}`}
+  >
+    {children}
+  </div>
+);
+
+// Navigation links pour une application monopage
+const navItems = [
+  { label: "À propos", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Témoignages", href: "#testimonials" },
+  { label: "Projets", href: "#projects" },
+  { label: "Stack", href: "#tech-stack" },
+  { label: "Contact", href: "#contact" },
 ];
- 
+
 function NavList() {
   return (
-    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      <NavListMenu />
-      <AccountListMenu />
-
-      {navListItems.map(({ label, icon }, key) => (
-        <Typography
+    <ul className="relative flex flex-col lg:flex-row gap-8 mt-8 lg:mt-0">
+      {navItems.map(({ label, href }, index) => (
+        <motion.li
           key={label}
-          as="a"
-          href="https://www.creative-tim.com/learning-lab/astro/quick-start/astro-launch-ui/"
-          variant="small"
-          color="blue-gray"
-          className="font-normal"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 * index }}
+          className="relative"
         >
-          <MenuItem className="flex items-center gap-2 lg:rounded-full">
-            {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
-            {label}
-          </MenuItem>
-        </Typography>
+          <a
+            href={href}
+            className="link-accent group text-white/80 hover:text-white transition-all duration-300"
+          >
+            <span className="flex items-center">
+              <span className="font-mono text-xs text-accent mr-2 font-bold">
+                0{index + 1}
+              </span>
+              <span className="uppercase tracking-wider text-sm font-medium">
+                {label}
+              </span>
+            </span>
+          </a>
+        </motion.li>
       ))}
     </ul>
   );
 }
- 
+
 export default function ComplexNavbar() {
-  const [isNavOpen, setIsNavOpen] = React.useState(false);
-  const [shouldShowBorder, setShouldShowBorder] = React.useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [shouldShowBorder, setShouldShowBorder] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
- 
-  React.useEffect(() => {
+
+  useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShouldShowBorder(true);
-      } else {
-        setShouldShowBorder(false);
-      }
+      setShouldShowBorder(window.scrollY > 50);
+
+      // Calculer la progression du scroll pour la barre de progression
+      const windowHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = (window.scrollY / windowHeight) * 100;
+      setScrollProgress(scrolled);
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
   }, []);
- 
+
   return (
     <Navbar
-      className={`sticky inset-0 z-10 mx-auto max-w-screen-2xl p-2 lg:pl-6 mt-4 transition-shadow ${
-        shouldShowBorder ? "border-b border-gray-300 shadow-none" : ""
+      className={`transition-all duration-300 ${
+        shouldShowBorder ? "border-b border-white/5" : ""
       }`}
     >
-      <div className="relative mx-auto flex items-center text-blue-gray-900">
-        <Typography
-          as="a"
-          href="/"
-          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
+      {/* Barre de progression du scroll */}
+      <div
+        className="absolute bottom-0 left-0 h-[2px] bg-accent transition-all duration-300"
+        style={{ width: `${scrollProgress}%` }}
+      />
+
+      <div className="container mx-auto flex items-center justify-between">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3 }}
         >
-          AstroLaunch UI
-        </Typography>
-        <div className="hidden lg:flex ml-auto">
+          <Typography
+            as="a"
+            href="#"
+            onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+              e.preventDefault();
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              });
+            }}
+            className="font-display text-xl flex items-center no-underline group cursor-pointer"
+          >
+            <span className="relative w-8 h-8 bg-accent mr-2 inline-flex items-center justify-center group-hover:bg-accent-dark transition-colors duration-300">
+              <span className="relative z-10">R</span>
+              <span className="absolute -top-1 -right-1 h-[2px] w-[6px] bg-white"></span>
+              <span className="absolute -bottom-1 -left-1 h-[2px] w-[6px] bg-white"></span>
+            </span>
+            <span className="font-bold group-hover:text-accent transition-colors duration-300">
+              RAYEN.DEV
+            </span>
+          </Typography>
+        </motion.div>
+        <div className="hidden lg:flex">
           <NavList />
         </div>
-        <IconButton
-          size="sm"
-          color="blue-gray"
-          variant="text"
-          onClick={toggleIsNavOpen}
-          className="ml-auto mr-2 lg:hidden"
-        >
-          <Bars2Icon className="h-6 w-6" />
-        </IconButton>
-        <a href="https://discord.gg/WCvQWMwT" target="_blank">
-          <Button size="sm" color="dark" variant="text">
-            <i className="fab fa-discord text-lg leading-none" aria-hidden="true"></i>
-          </Button>
-        </a>
-        <a href="https://github.com/creativetimofficial/astro-launch-ui" target="_blank">
-          <Button size="sm" color="dark" variant="text">
-            <i className="fab fa-github text-xl leading-none" aria-hidden="true"></i>
-          </Button>
-        </a>
-        <a href="/astro-launch-ui/#examplePages">
-          <Button color="dark">Get started</Button>
-        </a>
+        <div className="flex items-center gap-2">
+          <button
+            className="p-2 border border-white/20 hover:border-accent text-white lg:hidden"
+            onClick={toggleIsNavOpen}
+          >
+            <Bars2Icon className="h-5 w-5 text-white" />
+          </button>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <a href="#contact" className="link-white no-underline">
+              <button className="hidden lg:flex items-center px-6 py-2 font-mono uppercase tracking-wider bg-accent hover:bg-accent-dark text-white border-0">
+                <span className="text-xs mr-2">&gt;</span>Me contacter
+              </button>
+            </a>
+          </motion.div>
+        </div>
       </div>
-      <Collapse open={isNavOpen} className="overflow-scroll">
-        <NavList />
+      <Collapse open={isNavOpen} className="lg:hidden">
+        <div className="container mx-auto py-4 border-t border-white/5 mt-4">
+          <NavList />
+          <div className="mt-8">
+            <a href="#contact" className="link-white no-underline">
+              <button className="w-full flex items-center justify-center py-3 font-mono uppercase tracking-wider bg-accent hover:bg-accent-dark text-white border-0">
+                <span className="text-xs mr-2">&gt;</span>Me contacter
+              </button>
+            </a>
+          </div>
+        </div>
       </Collapse>
     </Navbar>
   );

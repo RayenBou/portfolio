@@ -1,46 +1,69 @@
-import ThemeProvider from "../theme-provider";
-import Navbar from "../defaultNavbar"
+import React from "react";
+import { Typography, Button } from "../../lib/ui-components";
+import { motion } from "framer-motion";
 
-import {
-  Button,
-  Typography
-} from "@material-tailwind/react";
-
-export function HeroSectionFour() {
+export function Error404Page() {
   return (
-    <ThemeProvider>
-      <Navbar />
-      <header className="h-screen min-h-screen w-screen bg-white">
-        <div className="relative h-screen flex align-center flex-col justify-center text-center bg-cover" style={{backgroundImage: `url('https://images.unsplash.com/photo-1650692201357-3b1b15469952?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80')`}}>
-          <span className="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-gray-900 to-slate-800"></span>
-          <Typography
-            variant="h1"
-            color="white"
-            className="mb-4 !leading-tight lg:text-7xl z-20"
-          >
-            Error 404
-          </Typography>
-          <Typography
-            variant="lead"
-            color="white"
-            className="mb-12 w-full opacity-80 md:w-10/12 lg:w-7/12 mx-auto px-28 z-10"
-          >
-            We&apos;re constantly trying to express ourselves and actualize our
-            dreams. If you have the opportunity to play this game.
-          </Typography>
-          <div className="w-auto mx-auto">
-            <div className="flex items-center">
-              <a className="z-10" href="./">
-                <Button color="dark" className="w-full px-4">
-                  Go Home
-                </Button>
-              </a>
-            </div>
+    <div className="min-h-screen w-full bg-anthracite-950 flex items-center justify-center px-4 relative">
+      {/* Lignes décoratives */}
+      <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 opacity-5 pointer-events-none">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="border-r border-white/20"></div>
+        ))}
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-center z-10 max-w-3xl"
+      >
+        <div className="mb-6 inline-flex items-center justify-center">
+          <div className="relative w-20 h-20 bg-accent flex items-center justify-center font-mono text-white font-bold text-5xl">
+            4
+            <span className="absolute -top-1 -right-1 h-[2px] w-[6px] bg-white"></span>
+            <span className="absolute -bottom-1 -left-1 h-[2px] w-[6px] bg-white"></span>
+          </div>
+          <div className="relative w-20 h-20 bg-anthracite-900 flex items-center justify-center font-mono text-white font-bold text-5xl mx-3">
+            0
+          </div>
+          <div className="relative w-20 h-20 bg-accent flex items-center justify-center font-mono text-white font-bold text-5xl">
+            4
+            <span className="absolute -top-1 -right-1 h-[2px] w-[6px] bg-white"></span>
+            <span className="absolute -bottom-1 -left-1 h-[2px] w-[6px] bg-white"></span>
           </div>
         </div>
-      </header>
-    </ThemeProvider>
+
+        <Typography
+          variant="h2"
+          className="text-white font-display mb-4 text-4xl md:text-5xl"
+        >
+          Page introuvable
+        </Typography>
+
+        <div className="h-px w-24 bg-accent mx-auto mb-6"></div>
+
+        <Typography
+          variant="lead"
+          className="text-white/70 mb-12 max-w-lg mx-auto"
+        >
+          La page que vous recherchez n'existe pas ou a été déplacée. Retournez
+          à l'accueil pour continuer votre navigation.
+        </Typography>
+
+        <div className="flex justify-center">
+          <a href="/" className="link-white no-underline">
+            <button className="flex items-center uppercase tracking-wider font-bold font-mono text-sm group bg-accent hover:bg-accent-dark text-white py-3 px-6 border-0">
+              <span className="group-hover:translate-x-1 transition-transform mr-2">
+                &lt;
+              </span>
+              Retour à l'accueil
+            </button>
+          </a>
+        </div>
+      </motion.div>
+    </div>
   );
 }
 
-export default HeroSectionFour;
+export default Error404Page;
