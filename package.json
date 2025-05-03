@@ -8,8 +8,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "create-free-demo": "node create-free-demo.js"
+    "astro": "astro"
   },
   "keywords": [
     "Portfolio"
