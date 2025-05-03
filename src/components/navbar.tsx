@@ -114,7 +114,6 @@ export default function ComplexNavbar() {
         shouldShowBorder ? "border-b border-white/5" : ""
       }`}
     >
-      {/* Barre de progression du scroll */}
       <div
         className="absolute bottom-0 left-0 h-[2px] bg-accent transition-all duration-300"
         style={{ width: `${scrollProgress}%` }}
