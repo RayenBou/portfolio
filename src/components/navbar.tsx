@@ -143,7 +143,7 @@ export default function ComplexNavbar() {
               <span className="absolute -bottom-1 -left-1 h-[2px] w-[6px] bg-white"></span>
             </span>
             <span className="font-bold group-hover:text-accent transition-colors duration-300">
-              RAYEN.DEV
+              RAYEN.PRO
             </span>
           </Typography>
         </motion.div>
