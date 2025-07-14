@@ -50,15 +50,15 @@ export default function Header() {
               variant="small"
               className="font-mono text-accent tracking-widest py-1 px-0 border-b-2 border-accent"
             >
-              <span className="inline-block mr-2">&gt;</span>DÉVELOPPEUR
+              <span className="inline-block mr-2">&gt;</span>LEAD
               BACK-END
             </Typography>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-display font-bold leading-none mb-8">
-            <span className="block text-white mb-2">Développeur</span>
+            <span className="block text-white mb-2">Lead</span>
             <span className="text-accent block">
-              <span className="typewriter">Web & Logiciels</span>
+              <span className="typewriter">Back-end & DevOps</span>
             </span>
           </h1>
 
