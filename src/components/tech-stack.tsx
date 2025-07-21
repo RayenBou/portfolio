@@ -241,11 +241,6 @@ export default function TechStack() {
             Ma stack technique
           </Typography>
           <div className="h-px w-24 bg-accent mx-auto mb-8"></div>
-          <Typography className="text-white/70">
-            Développeur Back-end et Formateur avec 5 ans d'expérience. Plus de
-            1500 heures de formation dispensées dans plus de 10 écoles IT en
-            région parisienne.
-          </Typography>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
